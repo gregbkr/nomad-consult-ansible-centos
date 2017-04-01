@@ -8,7 +8,7 @@
 
 ## Architecture of the stack
 
-Pic here!
+![nomad.PNG](https://github.com/gregbkr/nomad-consult-ansible-centos/raw/master/nomad.PNG)
 
 - **Master/client nomad host**: master will take care of electing cluster leader, planning and rescheduling nomad jobs. While client will report node status to the master and look for jobs to run, and then run container
 - **Consul**: service discovery. Nomad will record nodes, services in this database. Consul is replicated and  present on all nodes so nomad agents always have access to this data locally
@@ -24,11 +24,11 @@ Pic here!
 
 Clone this repo
 
-    git clone https://bitbucket.org/gregbk/nomad-poc && cd nomad
+    git clone https://github.com/gregbkr/nomad-consult-ansible-centos && cd nomad
 
-Please deploy 3 standard Centos hosts (nomad-server1, nomad-client1, nomad-client2) on your prefered cloud provider
+Please deploy 3 standard Centos hosts (nomad-server1, nomad-client1, nomad-client2) on your prefered cloud provider.
 
-Edit ansible inventory with your ips and ssh access key
+Edit ansible inventory with your ips and ssh access key:
 
     nano inventory
 
@@ -54,10 +54,10 @@ Ssh connect to a node and try some dsn query:
 
 We will deploy here a very simple application:
 - One nginx which redirect 80 --> flask app on 5000
-- Flask app, which records in a redis database a number of viewa
+- Flask app, which records in a redis database a number of view
 - A redis database, on port 6379
 
-Each of these components expose a service, registered and avalaible for query in consul.
+Each of these components exposes a service, registered and avalaible for query in consul.
 
 Copy nomad jobs to a client node and connect to it:
 
