@@ -1,0 +1,16 @@
+[Unit]
+Description=Nomad Service
+After=network.target consul.service
+
+[Service]
+Type=simple
+User=root
+{% if nomad_client == 'true' %}
+ExecStart={{ nomad_install_dir }}/nomad agent -config {{ nomad_config_dir }}/base.hcl -config {{ nomad_config_dir }}/client.hcl
+{% else %}
+ExecStart={{ nomad_install_dir }}/nomad agent -config {{ nomad_config_dir }}/base.hcl -config {{ nomad_config_dir }}/server.hcl
+{% endif %}
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

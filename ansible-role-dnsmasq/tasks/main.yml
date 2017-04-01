@@ -1,0 +1,40 @@
+---
+
+- name: Ensure dnsmasq is installed
+  yum: name=dnsmasq state=installed
+
+- name: Ensure dnsmasq is enabled at boot
+  service: name=dnsmasq enabled=yes
+
+- name: Make sure dnsmasq config does not exist before installing
+  file: >
+    state=absent
+    path={{ item }}
+  with_items:
+    - /etc/dnsmasq.conf
+    - /etc/resolv.conf.dnsmasq
+    - /etc/resolv.conf
+
+- name: Create dnsmasq configuration file
+  template: >
+    src=dnsmasq.conf.j2
+    dest=/etc/dnsmasq.conf
+    mode=0644
+  notify: restart dnsmasq
+
+- name: Create resolv.conf.dnsmasq configuration file
+  template: >
+    src=resolv.conf.dnsmasq
+    dest=/etc/resolv.conf.dnsmasq
+    mode=0644
+  notify: restart dnsmasq
+
+- name: Create resolv.conf configuration file
+  template: >
+    src=resolv.conf.j2
+    dest=/etc/resolv.conf
+    mode=0644
+  notify: restart dnsmasq
+
+- name: Make sure dnsmasq is started
+  service: name=dnsmasq state=started

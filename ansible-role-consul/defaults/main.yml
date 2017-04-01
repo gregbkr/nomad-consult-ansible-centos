@@ -1,0 +1,7 @@
+---
+
+consul_version: 0.7.0
+consul_webui_version: 0.7.0
+
+consul_server: true
+consul_webui: true

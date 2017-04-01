@@ -1,0 +1,22 @@
+{
+    {% if consul_bootstrap is defined %}
+    "bootstrap": true,
+    {% endif %}
+    "server": true,
+    "node_name": "{{ inventory_hostname }}",
+    "datacenter": "europe",
+    "data_dir": "{{ consul_data_dir }}",
+    "bind_addr":"0.0.0.0",
+    "advertise_addr": "{{ ansible_eth0.ipv4.address }}",
+    "addresses": {
+        "http": "0.0.0.0"
+    },
+    "telemetry": {
+        "statsd_address": "127.0.0.1:8125"
+    },
+    "retry_join":[
+    {% set comma = joiner(", ") %}
+    {% for host in groups['server'] %}
+        {{ comma() }}"{{ hostvars[host]["ansible_ssh_host"] }}"
+    {% endfor %}]
+}

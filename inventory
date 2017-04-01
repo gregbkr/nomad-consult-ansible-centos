@@ -1,0 +1,20 @@
+# Vagrant hosts
+#node1 ansible_host=192.168.50.10 ansible_ssh_host=192.168.50.10 ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_ssh_private_key_file='/vagrant/.vagrant/machines/node1/virtualbox/private_key' consul_bootstrap=true
+#node2 ansible_host=192.168.50.11 ansible_ssh_host=192.168.50.11 ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_ssh_private_key_file='/vagrant/.vagrant/machines/node2/virtualbox/private_key'
+#node3 ansible_host=192.168.50.12 ansible_ssh_host=192.168.50.12 ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_ssh_private_key_file='/vagrant/.vagrant/machines/node3/virtualbox/private_key'
+
+# Cloud hosts
+node1 ansible_ssh_host=185.19.31.47 ansible_ssh_private_key_file='~/.ssh/id_rsa_sbexx' ansible_ssh_common_args='-o StrictHostKeyChecking=no' consul_bootstrap=true
+node2 ansible_ssh_host=185.19.31.2 ansible_ssh_private_key_file='~/.ssh/id_rsa_sbexx' ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+node3 ansible_ssh_host=185.19.30.160 ansible_ssh_private_key_file='~/.ssh/id_rsa_sbexx' ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[server]
+node1
+
+[client]
+node2
+node3
+
+[client:vars]
+nomad_client=true
+nomad_server=false

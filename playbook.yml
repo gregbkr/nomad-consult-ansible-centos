@@ -1,0 +1,29 @@
+# INSTALL & UPGRADE OS PACKAGES
+
+- hosts: all
+  become: yes
+  tasks:
+    - name: upgrade all packages
+      yum: name=* state=latest
+
+    - name: install troubleshooting packages
+      yum: pkg={{item}} state=installed
+      with_items:
+       - nc
+       - net-tools
+       - bind-utils
+
+
+# INSTALL CONSUL + NOMAD
+
+- hosts: all
+  become: yes
+  roles:
+    - ansible-role-consul
+    - ansible-role-dnsmasq
+    - ansible-role-nomad
+
+- hosts: client
+  become: yes
+  roles:
+    - ansible-role-docker

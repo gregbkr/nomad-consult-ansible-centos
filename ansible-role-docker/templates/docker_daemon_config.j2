@@ -1,0 +1,1 @@
+DOCKER_OPTS="--dns={{ ansible_eth0.ipv4.address }} --ip={{ ansible_eth0.ipv4.address }} --host=tcp://{{ ansible_eth0.ipv4.address }}:2375 --host=unix:///var/run/docker.sock --insecure-registry={{ docker_privateregistry_address }}"
